@@ -1,3 +1,4 @@
+import 'package:expense_tracker/components/create_category.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +64,8 @@ class _AddNewExpState extends State<AddNewExp> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  readOnly: true,
+                  onTap: () => {print("object")},
                   controller: _categoryController,
                   textAlignVertical: TextAlignVertical.center,
                   keyboardType: TextInputType.number,
@@ -71,6 +74,15 @@ class _AddNewExpState extends State<AddNewExp> {
                     fillColor: Colors.white,
                     prefixIcon: const Icon(FontAwesomeIcons.list,
                         size: 16, color: Colors.grey),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => CreateCategoryDialog());
+                      },
+                      icon: const Icon(FontAwesomeIcons.plus,
+                          size: 16, color: Colors.grey),
+                    ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none),

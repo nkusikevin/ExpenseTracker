@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class ExpensesTile extends StatelessWidget {
   final String name;
   final String category;
-  final double amount;
+  final int amount;
   final String date;
-  final IconData icon;
-  const ExpensesTile({super.key , required this.name, required this.category, required this.amount, required this.date , required this.icon});
+  final  icon;
+  final Color color;
+  const ExpensesTile({super.key , required this.name, required this.category, required this.amount, required this.date , required this.icon , required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,13 @@ class ExpensesTile extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.yellow[600],
+                  color: color,
+
                 ),
-                child: Icon( icon, size: 30, color: Colors.white),
+                child: icon,
               ),
               const SizedBox(width: 10),
               Text(

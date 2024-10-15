@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:expense_tracker/components/expenses_tile.dart';
+import 'package:expense_tracker/screens/home/data/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -183,16 +184,18 @@ class MainScreen extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
-              itemCount: 30,
+              itemCount: myData.length,
               shrinkWrap: true,
               physics: const ScrollPhysics(),
-              itemBuilder: (context, int index) {
+              itemBuilder: (context, index) {
                 return ExpensesTile(
-                    name: "BigMuc",
-                    icon: Icons.brunch_dining,
-                    category: "food",
-                    amount: 200,
-                    date: "2021-10-10");
+                  name: myData[index]['name'] as String,
+                  category: myData[index]['category'] as String,
+                  amount: myData[index]['amount'] as int,
+                  date: myData[index]['date'] as String,
+                  icon: myData[index]['icon'] ,
+                  color: myData[index]['color'] as Color,
+                );
               },
             ),
           ),

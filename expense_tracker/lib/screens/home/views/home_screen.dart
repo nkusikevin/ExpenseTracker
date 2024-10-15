@@ -1,5 +1,7 @@
 import 'dart:math';
-
+import 'package:expense_tracker/screens/createExp/add_new_exp.dart';
+import 'package:expense_tracker/screens/stats/views/stats_view.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:expense_tracker/screens/home/views/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,28 +14,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+  var wigetList = [
+    MainScreen(),
+    AddNewExp(),
+    StatsScreen(),
+  ];
+  int _index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: SafeArea(child:  MainScreen()),
+      body: _index == 0 ? SafeArea(
+        child: MainScreen()
+        ) : SafeArea(child: StatsScreen()),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
         child: BottomNavigationBar(
+            currentIndex: _index,
+            onTap: (index) {
+              setState(() {
+                _index = index;
+              });
+            },
             backgroundColor: Colors.white,
             elevation: 3,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home),
+                icon: Icon(FluentIcons.home_24_regular),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.graph_square_fill),
+                icon: Icon(CupertinoIcons.chart_bar_alt_fill),
                 label: 'Stats',
               ),
             ]),
@@ -42,7 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
         shape: const CircleBorder(),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => wigetList[1]),
+          );
+        },
         child: Container(
           width: 60,
           height: 60,

@@ -5,13 +5,12 @@ class AddNewExp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Expense'),
-      ),
-      body: const Center(
-        child: Text('Add New Expense'),
-      ),
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        child: Column(
+          children: [
+            
+          ],
+        ));
   }
 }

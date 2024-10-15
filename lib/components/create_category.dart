@@ -11,7 +11,7 @@ class CreateCategoryDialog extends StatefulWidget {
 
 class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   bool isExpanded = false;
-  Color pickerColor = Color(0xff443a49);
+  Color pickerColor = Color(0xffffffff);
   IconData selectedIcon = FontAwesomeIcons.question;
   final List<IconData> _allIcons = [
     FontAwesomeIcons.house,

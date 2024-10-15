@@ -35,12 +35,19 @@ class _CategoryColorDialogState extends State<CategoryColorDialog> {
         ),
       ),
       actions: <Widget>[
-        ElevatedButton(
-          child: const Text('Got it'),
-          onPressed: () {
-            setState(() => currentColor = pickerColor);
-            Navigator.of(context).pop(currentColor);
-          },
+        SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: TextButton(
+            style: TextButton.styleFrom(backgroundColor: Colors.black),
+            child: const Text('Got it' , style: TextStyle(
+              color: Colors.white
+            ),),
+            onPressed: () {
+              setState(() => currentColor = pickerColor);
+              Navigator.of(context).pop(currentColor);
+            },
+          ),
         ),
       ],
     );

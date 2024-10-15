@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => wigetList[1]),
+            MaterialPageRoute(builder: (BuildContext context) => const AddNewExp()),
           );
         },
         child: Container(

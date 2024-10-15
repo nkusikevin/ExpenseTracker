@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expense_tracker/components/expenses_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,15 +54,14 @@ class MainScreen extends StatelessWidget {
               ),
               Container(
                 child: Icon(CupertinoIcons.settings,
-                size: 30,
-                    color: Theme.of(context).colorScheme.outline),
+                    size: 30, color: Theme.of(context).colorScheme.outline),
               ),
             ],
           ),
-         const SizedBox(height: 20),
-         Container(
-            width: MediaQuery.of(context).size.width ,
-            height: MediaQuery.of(context).size.width/2,
+          const SizedBox(height: 20),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width / 2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
@@ -71,50 +71,45 @@ class MainScreen extends StatelessWidget {
                   blurRadius: 10,
                 ),
               ],
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.tertiary,
-                  Theme.of(context).colorScheme.secondary,
-                  Theme.of(context).colorScheme.primary,
-                ],
-                transform: const GradientRotation(pi / 4)
-              ),
+              gradient: LinearGradient(colors: [
+                Theme.of(context).colorScheme.tertiary,
+                Theme.of(context).colorScheme.secondary,
+                Theme.of(context).colorScheme.primary,
+              ], transform: const GradientRotation(pi / 4)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-              Text('Total Balance',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: Colors.white)),
-                Text("\$ 10,000.00",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40,
-                      color: Colors.white)),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white30),
-                          child: const Icon(CupertinoIcons.arrow_up,
-                              size: 12, color: Colors.white),
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  Text('Total Balance',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Colors.white)),
+                  Text("\$ 10,000.00",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                          color: Colors.white)),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white30),
+                            child: const Icon(CupertinoIcons.arrow_up,
+                                size: 12, color: Colors.white),
+                          ),
+                          const SizedBox(width: 10),
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Income',
                                   style: TextStyle(
@@ -128,20 +123,20 @@ class MainScreen extends StatelessWidget {
                                       color: Colors.white)),
                             ],
                           ),
-                      ],
-                    ),
-                    Row(
+                        ],
+                      ),
+                      Row(
                         children: [
                           Container(
                             width: 20,
                             height: 20,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white30),
                             child: const Icon(CupertinoIcons.arrow_down,
                                 size: 12, color: Colors.white),
                           ),
                           const SizedBox(width: 10),
-                          Column(
+                          const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Expense',
@@ -158,12 +153,49 @@ class MainScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                  ],
-                )
+                    ],
+                  )
                 ],
               ),
             ),
-         )
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Recent Transactions',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.onSurface)),
+              GestureDetector(
+                onTap: () {
+                  print("View all");
+                },
+                child: Text('See all',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.outline)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 30,
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              itemBuilder: (context, int index) {
+                return ExpensesTile(
+                    name: "BigMuc",
+                    icon: Icons.brunch_dining,
+                    category: "food",
+                    amount: 200,
+                    date: "2021-10-10");
+              },
+            ),
+          ),
         ],
       ),
     );

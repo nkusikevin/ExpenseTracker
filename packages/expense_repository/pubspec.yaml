@@ -1,17 +1,15 @@
-name: expense_repo
+name: expense_repository
 description: "The repository for the expense tracker app"
 publish_to: "none"
 version: 1.0.0+1
 environment:
   sdk: ^3.5.3
 
-
 dependencies:
   flutter:
     sdk: flutter
   firebase_auth: ^5.3.1
   cloud_firestore: ^5.4.4
-
 
 dev_dependencies:
   flutter_test:
@@ -20,5 +18,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-

@@ -1,10 +1,11 @@
-import 'package:expense_repo/src/entities/category_entity.dart';
+import 'package:expense_repository/src/entities/category_entity.dart';
+import 'package:flutter/material.dart';
 
 class Category {
   String categoryId;
   String name;
   int totalExpenses;
-  String icon;
+  IconData icon;
   int color;
 
   Category({
@@ -16,14 +17,19 @@ class Category {
   });
 
   static final empty =
-      Category(categoryId: '', name: '', totalExpenses: 0, icon: '', color: 0);
+      Category(
+        categoryId: '', 
+        name: '', 
+        totalExpenses: 0, 
+        icon: Icons.question_answer , 
+        color: 0);
 
   CategoryEntity toEntity() {
     return CategoryEntity(
       categoryId: categoryId,
       name: name,
       totalExpenses: totalExpenses,
-      icon: icon,
+      icon: '',
       color: color,
     );
   }
@@ -33,7 +39,7 @@ class Category {
       categoryId: entity.categoryId,
       name: entity.name,
       totalExpenses: entity.totalExpenses,
-      icon: entity.icon,
+      icon: IconData(int.parse(entity.icon), fontFamily: 'MaterialIcons'),
       color: entity.color,
     );
   }

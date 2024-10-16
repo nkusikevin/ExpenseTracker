@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:expense_tracker/screens/createExp/add_new_exp.dart';
+import 'package:expense_tracker/screens/createExp/views/add_new_exp.dart';
 import 'package:expense_tracker/screens/stats/views/stats_view.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:expense_tracker/screens/home/views/main_screen.dart';

@@ -1,6 +1,10 @@
+import 'package:expense_repository/expense_repository.dart';
 import 'package:expense_tracker/components/color_picker.dart';
+import 'package:expense_tracker/screens/createExp/bloc/create_category/create_category_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateCategoryDialog extends StatefulWidget {
   const CreateCategoryDialog({Key? key}) : super(key: key);
@@ -12,6 +16,9 @@ class CreateCategoryDialog extends StatefulWidget {
 class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   bool isExpanded = false;
   Color pickerColor = Color(0xffffffff);
+  late List<IconData> _filteredIcons;
+  final TextEditingController _nameController = TextEditingController();
+
   IconData selectedIcon = FontAwesomeIcons.question;
   final List<IconData> _allIcons = [
     FontAwesomeIcons.house,
@@ -30,7 +37,15 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
     FontAwesomeIcons.paintbrush,
     FontAwesomeIcons.camera,
   ];
-  late List<IconData> _filteredIcons;
+
+  void handleCreateCategory() {
+    Category category = Category.empty;
+    category.categoryId = Uuid().v4();
+    category.name = _nameController.text;
+    category.icon = selectedIcon;
+    category.color = pickerColor.value;
+    context.read<CreateCategoryBloc>().add(CreateCategory(category));
+  }
 
   @override
   void initState() {
@@ -58,6 +73,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
           children: [
             TextField(
               textAlignVertical: TextAlignVertical.center,
+              controller: _nameController,
               decoration: InputDecoration(
                 hintText: 'Name',
                 isDense: true,

@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDDApp0dK63MzLLGhmz_pFkb6ovQvMvyPQ',
-    appId: '1:156725179360:android:e32b20dfee301b9f0ab185',
+    appId: '1:156725179360:android:fc5140d4ec44a0780ab185',
     messagingSenderId: '156725179360',
     projectId: 'expense-tracker-276d4',
     storageBucket: 'expense-tracker-276d4.appspot.com',
@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'expense-tracker-276d4.appspot.com',
     measurementId: 'G-6518XCEDMR',
   );
+
 }

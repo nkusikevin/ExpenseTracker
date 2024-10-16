@@ -51,6 +51,7 @@ class _AddNewExpState extends State<AddNewExp> {
                     controller: _amountController,
                     textAlignVertical: TextAlignVertical.center,
                     keyboardType: TextInputType.number,
+                    
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,

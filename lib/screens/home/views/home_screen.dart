@@ -1,10 +1,16 @@
 import 'dart:math';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:expense_tracker/screens/createExp/views/add_new_exp.dart';
 import 'package:expense_tracker/screens/stats/views/stats_view.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:expense_tracker/screens/home/views/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../createExp/bloc/create_category/create_category_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
 
 
   var wigetList = [

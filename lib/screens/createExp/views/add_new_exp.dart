@@ -1,7 +1,12 @@
+import 'package:expense_repository/expense_repository.dart';
 import 'package:expense_tracker/components/create_category.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
+
+import '../bloc/create_category/create_category_bloc.dart';
 
 class AddNewExp extends StatefulWidget {
   const AddNewExp({super.key});
@@ -15,6 +20,8 @@ class _AddNewExpState extends State<AddNewExp> {
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
+
+
 
   @override
   void initState() {
@@ -51,7 +58,6 @@ class _AddNewExpState extends State<AddNewExp> {
                     controller: _amountController,
                     textAlignVertical: TextAlignVertical.center,
                     keyboardType: TextInputType.number,
-                    
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -66,7 +72,7 @@ class _AddNewExpState extends State<AddNewExp> {
                 const SizedBox(height: 20),
                 TextField(
                   readOnly: true,
-                  onTap: () => {print("object")},
+                  onTap: () => {print("category")},
                   controller: _categoryController,
                   textAlignVertical: TextAlignVertical.center,
                   keyboardType: TextInputType.number,
@@ -79,7 +85,7 @@ class _AddNewExpState extends State<AddNewExp> {
                       onPressed: () {
                         showDialog(
                             context: context,
-                            builder: (context) => CreateCategoryDialog());
+                            builder: (context) => const CreateCategoryDialog());
                       },
                       icon: const Icon(FontAwesomeIcons.plus,
                           size: 16, color: Colors.grey),
@@ -139,6 +145,8 @@ class _AddNewExpState extends State<AddNewExp> {
                       print('Amount: ${_amountController.text}');
                       print('Category: ${_categoryController.text}');
                       print('Date: ${_dateController.text}');
+
+                      
                     },
                     child: const Text(
                       'Save',

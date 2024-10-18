@@ -1,9 +1,11 @@
 import 'package:expense_repository/expense_repository.dart';
+import 'package:expense_tracker/screens/createExp/bloc/get_categories/get_categories_bloc.dart';
 import 'package:expense_tracker/screens/home/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'screens/createExp/bloc/create_category/create_category_bloc.dart';
+import 'screens/createExp/bloc/create_expense/create_expense_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,6 +21,13 @@ class MyApp extends StatelessWidget {
               context.read<ExpenseRepository>(),
             ),
           ),
+          BlocProvider(
+              create: (context) => GetCategoriesBloc(
+                    context.read<ExpenseRepository>(),
+                  )),
+          BlocProvider(
+              create: (context) =>
+                  CreateExpenseBloc(context.read<ExpenseRepository>())),
         ],
         child: MaterialApp(
           title: 'Expense Tracker',

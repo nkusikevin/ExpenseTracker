@@ -133,7 +133,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                 duration: const Duration(milliseconds: 300),
                 height: isExpanded ? 180 : 0,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const  BoxDecoration(
                     color: Colors.white,
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(12)),
@@ -145,7 +145,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                           shrinkWrap: true,
                           physics: ScrollPhysics(),
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 5,
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8,

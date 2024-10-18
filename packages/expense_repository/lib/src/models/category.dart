@@ -16,20 +16,19 @@ class Category {
     required this.color,
   });
 
-  static final empty =
-      Category(
-        categoryId: '', 
-        name: '', 
-        totalExpenses: 0, 
-        icon: Icons.question_answer , 
-        color: 0);
+  static final empty = Category(
+      categoryId: '',
+      name: '',
+      totalExpenses: 0,
+      icon: Icons.question_answer,
+      color: 0);
 
   CategoryEntity toEntity() {
     return CategoryEntity(
       categoryId: categoryId,
       name: name,
       totalExpenses: totalExpenses,
-      icon: '',
+      icon: icon.codePoint.toString(),
       color: color,
     );
   }
@@ -39,7 +38,7 @@ class Category {
       categoryId: entity.categoryId,
       name: entity.name,
       totalExpenses: entity.totalExpenses,
-      icon: IconData(int.parse(entity.icon), fontFamily: 'MaterialIcons'),
+      icon: IconData(int.parse(entity.icon), fontFamily: 'FontAwesomeIcons'),
       color: entity.color,
     );
   }

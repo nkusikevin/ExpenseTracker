@@ -37,7 +37,7 @@ class ExpensesTile extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uuid/uuid.dart';
+import 'package:expense_tracker/utils/icon_mapping.dart';
 
 class CreateCategoryDialog extends StatefulWidget {
   const CreateCategoryDialog({Key? key}) : super(key: key);
@@ -17,27 +18,29 @@ class CreateCategoryDialog extends StatefulWidget {
 class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   bool isExpanded = false;
   Color pickerColor = Color(0xffffffff);
-  late List<IconData> _filteredIcons;
+  String iconString = 'question';
+  // late List<IconData> _filteredIcons;
   final TextEditingController _nameController = TextEditingController();
 
-  IconData selectedIcon = FontAwesomeIcons.question;
-  final List<IconData> _allIcons = [
-    FontAwesomeIcons.house,
-    FontAwesomeIcons.car,
-    FontAwesomeIcons.plane,
-    FontAwesomeIcons.burger,
-    FontAwesomeIcons.mugSaucer,
-    FontAwesomeIcons.shirt,
-    FontAwesomeIcons.gift,
-    FontAwesomeIcons.gamepad,
-    FontAwesomeIcons.dog,
-    FontAwesomeIcons.cat,
-    FontAwesomeIcons.book,
-    FontAwesomeIcons.music,
-    FontAwesomeIcons.film,
-    FontAwesomeIcons.paintbrush,
-    FontAwesomeIcons.camera,
-  ];
+  String selectedIcon = 'question';
+  // final List<IconData> _allIcons = [
+  //   FontAwesomeIcons.house,
+  //   FontAwesomeIcons.car,
+  //   FontAwesomeIcons.plane,
+  //   FontAwesomeIcons.burger,
+  //   FontAwesomeIcons.mugSaucer,
+  //   FontAwesomeIcons.shirt,
+  //   FontAwesomeIcons.gift,
+  //   FontAwesomeIcons.gamepad,
+  //   FontAwesomeIcons.dog,
+  //   FontAwesomeIcons.cat,
+  //   FontAwesomeIcons.book,
+  //   FontAwesomeIcons.music,
+  //   FontAwesomeIcons.film,
+  //   FontAwesomeIcons.paintbrush,
+  //   FontAwesomeIcons.camera,
+  // ];
+  late List<MapEntry<String, IconData>> _filteredIcons;
 
   void handleCreateCategory() {
     Category category = Category.empty;
@@ -45,20 +48,31 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
     category.name = _nameController.text;
     category.icon = selectedIcon;
     category.color = pickerColor.value;
+    print(iconString);
+    print(selectedIcon);
     context.read<CreateCategoryBloc>().add(CreateCategory(category));
   }
 
   @override
   void initState() {
     super.initState();
-    _filteredIcons = _allIcons;
+    // _filteredIcons = _allIcons;
+    _filteredIcons = IconMapping.getAllIcons();
   }
+
+  // void _filterIcons(String query) {
+  //   setState(() {
+  //     _filteredIcons = _allIcons
+  //         .where((icon) =>
+  //             icon.toString().toLowerCase().contains(query.toLowerCase()))
+  //         .toList();
+  //   });
+  // }
 
   void _filterIcons(String query) {
     setState(() {
-      _filteredIcons = _allIcons
-          .where((icon) =>
-              icon.toString().toLowerCase().contains(query.toLowerCase()))
+      _filteredIcons = IconMapping.getAllIcons()
+          .where((icon) => icon.key.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -105,7 +119,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                   hintText: 'Icon',
                   filled: true,
                   fillColor: Colors.white,
-                  prefixIcon: Icon(selectedIcon),
+                  prefixIcon: Icon(IconMapping.getIcon(selectedIcon)), //
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -133,7 +147,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                 duration: const Duration(milliseconds: 300),
                 height: isExpanded ? 180 : 0,
                 child: Container(
-                  decoration: const  BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(12)),
@@ -153,10 +167,10 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                           itemCount: _filteredIcons.length,
                           itemBuilder: (context, index) {
                             return IconButton(
-                              icon: FaIcon(_filteredIcons[index]),
+                              icon: FaIcon(_filteredIcons[index].value),
                               onPressed: () {
                                 setState(() {
-                                  selectedIcon = _filteredIcons[index];
+                                  selectedIcon = _filteredIcons[index].key;
                                   isExpanded = false;
                                 });
                               },

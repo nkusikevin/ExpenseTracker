@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:expense_repository/expense_repository.dart';
+import 'package:expense_tracker/components/category_tile.dart';
 import 'package:expense_tracker/components/create_category.dart';
 import 'package:expense_tracker/components/snackBar.dart';
 import 'package:expense_tracker/screens/createExp/bloc/get_categories/get_categories_bloc.dart';
+import 'package:expense_tracker/utils/icon_mapping.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,15 +21,16 @@ class AddNewExp extends StatefulWidget {
 }
 
 class _AddNewExpState extends State<AddNewExp> {
-  TextEditingController _amountController = TextEditingController();
-  TextEditingController _categoryController = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   late Expense expense;
 
   bool isCategoryClicked = false;
   bool isLoading = false;
 
+  // ignore: non_constant_identifier_names
   void add_expense() {
     context.read<CreateExpenseBloc>().add(CreateExpense(expense));
   }
@@ -35,6 +40,7 @@ class _AddNewExpState extends State<AddNewExp> {
     _dateController.text = DateFormat("dd/MM/yyyy").format(DateTime.now());
     context.read<GetCategoriesBloc>().add(GetCategories());
     expense = Expense.empty;
+    expense.category = Category.empty;
     expense.expenseId = const Uuid().v1();
     super.initState();
   }
@@ -43,7 +49,7 @@ class _AddNewExpState extends State<AddNewExp> {
     return BlocListener<CreateExpenseBloc, CreateExpenseState>(
       listener: (context, state) {
         if (state is CreateExpenseSuccess) {
-          showCustomSnackBar(context, 'Expense added successfully' ,"success");
+          showCustomSnackBar(context, 'Expense added successfully', "success");
           expense = Expense.empty;
           Navigator.pop(context);
         } else if (state is CreateExpenseFailure) {
@@ -80,27 +86,42 @@ class _AddNewExpState extends State<AddNewExp> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          SizedBox(
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                             width: MediaQuery.of(context).size.width * 0.7,
-                            child: TextField(
-                              controller: _amountController,
-                              onChanged: (value) {
-                                setState(() {
-                                  expense.amount = int.parse(value);
-                                });
-                              },
-                              textAlignVertical: TextAlignVertical.center,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                prefixIcon: const Icon(
-                                    FontAwesomeIcons.dollarSign,
-                                    size: 16,
-                                    color: Colors.grey),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    borderSide: BorderSide.none),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  const Text(
+                                    '\$',
+                                    style: TextStyle(
+                                        fontSize: 24, color: Colors.purple),
+                                  ),
+                                  Expanded(
+                                    child: TextField(
+                                      controller: _amountController,
+                                      keyboardType: TextInputType.number,
+                                      style: const TextStyle(
+                                          fontSize: 24, color: Colors.purple),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: '0',
+                                        hintStyle: TextStyle(
+                                            color:
+                                                Colors.purple.withOpacity(0.5)),
+                                      ),
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty) {
+                                          expense.amount = int.parse(value);
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -117,13 +138,12 @@ class _AddNewExpState extends State<AddNewExp> {
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: expense.category == Category.empty
-                                  ? Colors.white
-                                  : Color(expense.category.color),
-                              prefixIcon: Icon(
-                                isCategoryClicked
-                                    ? FontAwesomeIcons.chevronDown
-                                    : FontAwesomeIcons.chevronUp,
+                              fillColor: Colors.white,
+                             prefixIcon: Icon(
+                                expense.category == Category.empty
+                                    ? FontAwesomeIcons.list
+                                    : IconMapping.getIcon(
+                                        expense.category.icon),
                                 size: 16,
                                 color: Colors.grey,
                               ),
@@ -139,7 +159,7 @@ class _AddNewExpState extends State<AddNewExp> {
                               ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(12),
+                                  top: const Radius.circular(12),
                                   bottom: Radius.circular(
                                       isCategoryClicked ? 0 : 12),
                                 ),
@@ -170,26 +190,23 @@ class _AddNewExpState extends State<AddNewExp> {
                                       child: ListView.builder(
                                         itemCount: state.categories.length,
                                         itemBuilder: (context, index) {
-                                          return Card(
-                                            color: Color(
-                                                state.categories[index].color),
-                                            child: ListTile(
-                                              leading: Icon(
-                                                  color: Colors.white,
-                                                  state.categories[index].icon),
-                                              title: Text(
-                                                  state.categories[index].name),
-                                              onTap: () {
-                                                setState(() {
-                                                  expense.category =
-                                                      state.categories[index];
-                                                  _categoryController.text =
-                                                      state.categories[index]
-                                                          .name;
-                                                  isCategoryClicked = false;
-                                                });
-                                              },
-                                            ),
+                                          return CategoryTile(
+                                            category: state.categories[index],
+                                            onTap: () {
+                                              setState(() {
+                                                expense.category =
+                                                    state.categories[index];
+                                              
+                                                expense.category.icon =
+                                                    state.categories[index]
+                                                        .icon;
+                                              
+
+                                                _categoryController.text = state
+                                                    .categories[index].name;
+                                                isCategoryClicked = false;
+                                              });
+                                            },
                                           );
                                         },
                                       ),
@@ -231,33 +248,32 @@ class _AddNewExpState extends State<AddNewExp> {
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide.none),
                               hintText: 'Date',
-                              hintStyle: TextStyle(color: Colors.grey),
+                              hintStyle: const TextStyle(color: Colors.grey),
                             ),
                           ),
                           const SizedBox(height: 20),
-                          SizedBox(
+                          Container(
                             width: double.infinity,
                             height: kToolbarHeight,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              onPressed: () {
-                                add_expense();
-                              },
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: LinearGradient(colors: [
+                                Theme.of(context).colorScheme.tertiary,
+                                Theme.of(context).colorScheme.secondary,
+                                Theme.of(context).colorScheme.primary,
+                              ], transform: const GradientRotation(pi / 4)),
                             ),
-                          )
+                            child: TextButton(
+                                onPressed: isLoading ? null : add_expense,
+                                child: isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.white)
+                                    : const Text(
+                                        'Save ',
+                                        style: TextStyle(
+                                            fontSize: 18, color: Colors.white),
+                                      )),
+                          ),
                         ],
                       ));
                 } else {

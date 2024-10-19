@@ -5,12 +5,14 @@ import '../models/models.dart';
 
 class ExpenseEntity {
   String expenseId;
+  String title;
   Category category;
   DateTime date;
   int amount;
 
   ExpenseEntity({
     required this.expenseId,
+    required this.title,
     required this.category,
     required this.date,
     required this.amount,
@@ -28,6 +30,7 @@ class ExpenseEntity {
   static ExpenseEntity fromDocument(Map<String, dynamic> doc) {
     return ExpenseEntity(
       expenseId: doc['expenseId'],
+      title: doc['title'],
       category:
           Category.fromEntity(CategoryEntity.fromDocument(doc['category'])),
       date: (doc['date'] as Timestamp).toDate(),

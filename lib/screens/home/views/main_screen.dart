@@ -2,13 +2,29 @@ import 'dart:math';
 
 import 'package:expense_tracker/components/expenses_tile.dart';
 import 'package:expense_tracker/screens/home/data/data.dart';
+import 'package:expense_tracker/utils/icon_mapping.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MainScreen extends StatelessWidget {
+import '../blocs/get_expenses/get_expenses_bloc.dart';
+
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+
+  @override
+  void initState() {
+   context.read<GetExpensesBloc>().add(GetExpenses());
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -53,10 +69,8 @@ class MainScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                child: Icon(CupertinoIcons.settings,
-                    size: 30, color: Theme.of(context).colorScheme.outline),
-              ),
+              Icon(CupertinoIcons.settings,
+                  size: 30, color: Theme.of(context).colorScheme.outline),
             ],
           ),
           const SizedBox(height: 20),
@@ -83,12 +97,12 @@ class MainScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Total Balance',
+                  const Text('Total Balance',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                           color: Colors.white)),
-                  Text("\$ 10,000.00",
+                  const Text("\$ 10,000.00",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
@@ -103,7 +117,7 @@ class MainScreen extends StatelessWidget {
                           Container(
                             width: 20,
                             height: 20,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white30),
                             child: const Icon(CupertinoIcons.arrow_up,
                                 size: 12, color: Colors.white),
@@ -173,7 +187,7 @@ class MainScreen extends StatelessWidget {
                 onTap: () {
                   print("View all");
                 },
-                child: Text('See all',
+                child: Text('Sync all',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -182,23 +196,39 @@ class MainScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          Expanded(
-            child: ListView.builder(
-              itemCount: myData.length,
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ExpensesTile(
-                  name: myData[index]['name'] as String,
-                  category: myData[index]['category'] as String,
-                  amount: myData[index]['amount'] as int,
-                  date: myData[index]['date'] as String,
-                  icon: myData[index]['icon'] ,
-                  color: myData[index]['color'] as Color,
-                );
-              },
-            ),
-          ),
+          BlocBuilder<GetExpensesBloc, GetExpensesState>(
+              builder: (context, state) {
+            // print(state.expenses);
+            if (state is GetExpensesLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is GetExpensesFailed) {
+              return const Center(child: Text('Failed to load expenses'));
+            } else if (state is GetExpensesSuccess) {
+              print(state.expenses.length);
+              return Expanded(
+              child: ListView.builder(
+                itemCount: state.expenses.length,
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ExpensesTile(
+                    name: "none",
+                    category: state.expenses[index].category.name,
+                    amount: state.expenses[index].amount.toInt(),
+                    date: state.expenses[index].date.toString(),
+                    icon: FaIcon(
+                        IconMapping.getIcon(state.expenses[index].category.icon),
+                        color: Colors.white,
+                      ),
+                    color: Color(state.expenses[index].category.color),
+                  );
+                },
+              ),
+            );
+            } else {
+              return const SizedBox();
+            }
+          })
         ],
       ),
     );

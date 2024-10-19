@@ -1,14 +1,12 @@
 class CategoryEntity {
   String categoryId;
   String name;
-  int totalExpenses;
   String icon;
   int color;
 
   CategoryEntity({
     required this.categoryId,
     required this.name,
-    required this.totalExpenses,
     required this.icon,
     required this.color,
   });
@@ -17,7 +15,6 @@ class CategoryEntity {
     return {
       'categoryId': categoryId,
       'name': name,
-      'totalExpenses': totalExpenses,
       'icon': icon,
       'color': color,
     };
@@ -27,7 +24,6 @@ class CategoryEntity {
     return CategoryEntity(
       categoryId: doc['categoryId'],
       name: doc['name'],
-      totalExpenses: doc['totalExpenses'],
       icon: doc['icon'],
       color: doc['color'],
     );

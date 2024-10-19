@@ -24,6 +24,7 @@ class _AddNewExpState extends State<AddNewExp> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   late Expense expense;
 
@@ -127,6 +128,30 @@ class _AddNewExpState extends State<AddNewExp> {
                           ),
                           const SizedBox(height: 20),
                           TextField(
+                            textAlignVertical: TextAlignVertical.center,
+                            controller: _titleController,
+                            onChanged: (value) => expense.title = value,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              prefixIcon: const Icon(
+                                FontAwesomeIcons.textHeight,
+                                size: 16,
+                                color: Colors.grey,
+                              ),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(12),
+                                  bottom: Radius.circular(12),
+                                ),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintText: 'Title',
+                              hintStyle: const TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          TextField(
                             readOnly: true,
                             onTap: () => {
                               setState(() {
@@ -139,7 +164,7 @@ class _AddNewExpState extends State<AddNewExp> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                             prefixIcon: Icon(
+                              prefixIcon: Icon(
                                 expense.category == Category.empty
                                     ? FontAwesomeIcons.list
                                     : IconMapping.getIcon(
@@ -196,11 +221,9 @@ class _AddNewExpState extends State<AddNewExp> {
                                               setState(() {
                                                 expense.category =
                                                     state.categories[index];
-                                              
-                                                expense.category.icon =
-                                                    state.categories[index]
-                                                        .icon;
-                                              
+
+                                                expense.category.icon = state
+                                                    .categories[index].icon;
 
                                                 _categoryController.text = state
                                                     .categories[index].name;

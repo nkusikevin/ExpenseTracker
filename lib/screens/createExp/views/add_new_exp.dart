@@ -14,7 +14,9 @@ import 'package:uuid/uuid.dart';
 import '../bloc/create_expense/create_expense_bloc.dart';
 
 class AddNewExp extends StatefulWidget {
-  const AddNewExp({super.key});
+  final VoidCallback onExpenseAdded;
+
+  const AddNewExp({Key? key, required this.onExpenseAdded}) : super(key: key);
 
   @override
   State<AddNewExp> createState() => _AddNewExpState();
@@ -52,6 +54,7 @@ class _AddNewExpState extends State<AddNewExp> {
         if (state is CreateExpenseSuccess) {
           showCustomSnackBar(context, 'Expense added successfully', "success");
           expense = Expense.empty;
+          widget.onExpenseAdded(); // Call the callback
           Navigator.pop(context);
         } else if (state is CreateExpenseFailure) {
           showCustomSnackBar(context, 'Error while adding expense', "error");
@@ -132,19 +135,18 @@ class _AddNewExpState extends State<AddNewExp> {
                             controller: _titleController,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
-                        
                                 expense.title = value;
                               }
                             },
                             decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              prefixIcon:  Icon(
+                              prefixIcon: Icon(
                                 FontAwesomeIcons.textHeight,
                                 size: 16,
                                 color: Colors.grey,
                               ),
-                              border:  OutlineInputBorder(
+                              border: OutlineInputBorder(
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(12),
                                   bottom: Radius.circular(12),
@@ -152,7 +154,7 @@ class _AddNewExpState extends State<AddNewExp> {
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Title',
-                              hintStyle:  TextStyle(color: Colors.grey),
+                              hintStyle: TextStyle(color: Colors.grey),
                             ),
                           ),
                           const SizedBox(height: 20),

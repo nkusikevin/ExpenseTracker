@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:expense_tracker/screens/createExp/views/add_new_exp.dart';
+import 'package:expense_tracker/screens/home/blocs/get_expenses/get_expenses_bloc.dart';
 import 'package:expense_tracker/screens/stats/views/stats_view.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:expense_tracker/screens/home/views/main_screen.dart';
@@ -21,12 +22,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  void _refreshExpenses() {
+    context.read<GetExpensesBloc>().add(GetExpenses());
+  }
 
 
 
   var wigetList = [
     MainScreen(),
-    AddNewExp(),
     StatsScreen(),
   ];
   int _index = 0;
@@ -71,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => const AddNewExp()),
+            MaterialPageRoute(builder: (BuildContext context) => AddNewExp(onExpenseAdded: _refreshExpenses)),
           );
         },
         child: Container(

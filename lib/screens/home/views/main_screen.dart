@@ -19,6 +19,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
+
+
+
   @override
   void initState() {
    context.read<GetExpensesBloc>().add(GetExpenses());
@@ -185,7 +188,7 @@ class _MainScreenState extends State<MainScreen> {
                       color: Theme.of(context).colorScheme.onSurface)),
               GestureDetector(
                 onTap: () {
-                  print("View all");
+                  context.read<GetExpensesBloc>().add(GetExpenses());
                 },
                 child: Text('Sync all',
                     style: TextStyle(

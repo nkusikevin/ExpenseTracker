@@ -198,13 +198,11 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(height: 20),
           BlocBuilder<GetExpensesBloc, GetExpensesState>(
               builder: (context, state) {
-            // print(state.expenses);
             if (state is GetExpensesLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is GetExpensesFailed) {
               return const Center(child: Text('Failed to load expenses'));
             } else if (state is GetExpensesSuccess) {
-              print(state.expenses.length);
               return Expanded(
               child: ListView.builder(
                 itemCount: state.expenses.length,
@@ -212,7 +210,7 @@ class _MainScreenState extends State<MainScreen> {
                 physics: const ScrollPhysics(),
                 itemBuilder: (context, index) {
                   return ExpensesTile(
-                    name: "none",
+                    name: state.expenses[index].title,
                     category: state.expenses[index].category.name,
                     amount: state.expenses[index].amount.toInt(),
                     date: state.expenses[index].date.toString(),

@@ -16,9 +16,12 @@ class IconMapping {
     'book': FontAwesomeIcons.book,
     'music': FontAwesomeIcons.music,
     'film': FontAwesomeIcons.film,
+    'gym': FontAwesomeIcons.dumbbell,
     'paintbrush': FontAwesomeIcons.paintbrush,
     'camera': FontAwesomeIcons.camera,
+    'phone': FontAwesomeIcons.phone,
     'question': FontAwesomeIcons.question,
+
   };
 
   static IconData getIcon(String iconName) {

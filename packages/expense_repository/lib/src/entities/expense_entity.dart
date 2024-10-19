@@ -21,6 +21,7 @@ class ExpenseEntity {
   Map<String, Object?> toDocument() {
     return {
       'expenseId': expenseId,
+      'title': title,
       'category': category.toEntity().toDocument(),
       'date': date,
       'amount': amount,

@@ -130,16 +130,21 @@ class _AddNewExpState extends State<AddNewExp> {
                           TextField(
                             textAlignVertical: TextAlignVertical.center,
                             controller: _titleController,
-                            onChanged: (value) => expense.title = value,
-                            decoration: InputDecoration(
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                        
+                                expense.title = value;
+                              }
+                            },
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              prefixIcon: const Icon(
+                              prefixIcon:  Icon(
                                 FontAwesomeIcons.textHeight,
                                 size: 16,
                                 color: Colors.grey,
                               ),
-                              border: const OutlineInputBorder(
+                              border:  OutlineInputBorder(
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(12),
                                   bottom: Radius.circular(12),
@@ -147,7 +152,7 @@ class _AddNewExpState extends State<AddNewExp> {
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Title',
-                              hintStyle: const TextStyle(color: Colors.grey),
+                              hintStyle:  TextStyle(color: Colors.grey),
                             ),
                           ),
                           const SizedBox(height: 20),

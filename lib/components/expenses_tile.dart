@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpensesTile extends StatelessWidget {
   final String name;
   final String category;
   final int amount;
   final String date;
-  final  icon;
+  final icon;
   final Color color;
-  const ExpensesTile({super.key , required this.name, required this.category, required this.amount, required this.date , required this.icon , required this.color});
+  const ExpensesTile(
+      {super.key,
+      required this.name,
+      required this.category,
+      required this.amount,
+      required this.date,
+      required this.icon,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,6 @@ class ExpensesTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: color,
-
                 ),
                 child: icon,
               ),
@@ -47,12 +54,12 @@ class ExpensesTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('\$ $amount',
+              Text('\$$amount',
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                       color: Theme.of(context).colorScheme.onSurface)),
-              Text(date,
+              Text(DateFormat('yyyy-MM-dd').format(DateTime.parse(date)),
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 10,

@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ) : SafeArea(child: StatsScreen()),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
         ),
         child: BottomNavigationBar(
             currentIndex: _index,

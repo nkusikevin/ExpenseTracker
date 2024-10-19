@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               primary: Color(0xFF00B2E7),
               secondary: Color(0xFFE064F7),
               tertiary: Color(0xFFFF8D6c),
-              outline: Colors.grey,
+              outline: const Color.fromARGB(255, 129, 129, 129),
             ),
           ),
           home: const HomeScreen(),

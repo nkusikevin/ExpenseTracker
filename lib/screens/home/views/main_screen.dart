@@ -48,10 +48,7 @@ class _MainScreenState extends State<MainScreen> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle, color: Colors.yellow[700]),
                       ),
-                      Icon(
-                        CupertinoIcons.person_fill,
-                        color: Colors.yellow[900],
-                      ),
+                      Image.asset('assets/images/2.png' , width: 50, height: 50,),
                     ],
                   ),
                   const SizedBox(width: 10),
@@ -60,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
                     children: [
                       Text('Welcome!',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               fontSize: 12,
                               color: Theme.of(context).colorScheme.outline)),
                       Text('John Doe',
@@ -72,8 +69,17 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ],
               ),
-              Icon(CupertinoIcons.settings,
-                  size: 30, color: Theme.of(context).colorScheme.outline),
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  
+                  color: Colors.white
+                ),
+                child: Icon(CupertinoIcons.settings,
+                    size: 30, color: Theme.of(context).colorScheme.outline),
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -122,8 +128,8 @@ class _MainScreenState extends State<MainScreen> {
                             height: 20,
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white30),
-                            child: const Icon(CupertinoIcons.arrow_up,
-                                size: 12, color: Colors.white),
+                            child:  Icon(CupertinoIcons.arrow_up,
+                                size: 12, color: Colors.lightGreenAccent[400]),
                           ),
                           const SizedBox(width: 10),
                           const Column(
@@ -151,7 +157,7 @@ class _MainScreenState extends State<MainScreen> {
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white30),
                             child: const Icon(CupertinoIcons.arrow_down,
-                                size: 12, color: Colors.white),
+                                size: 12, color: Color.fromARGB(255, 255, 40, 40)),
                           ),
                           const SizedBox(width: 10),
                           const Column(

@@ -24,6 +24,8 @@ dependencies:
   expense_repository:
     path: packages/expense_repository
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -31,3 +33,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+  - assets/images/

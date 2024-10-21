@@ -1,16 +1,40 @@
-# expense_tracker
+# Expense Tracker App
 
-A new Flutter project.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Here is a screenshot of the app design , the app is still under development 
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![image](assets/images/Screenshot.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Features
+
+- Add Expense
+- Add Category
+- View Expense
+- View Category
+- View Expense by Category
+- View Expense by Date
+
+
+
+## Installation
+
+- Clone the repository
+- Run `flutter pub get`
+- Run `flutter run`
+
+
+## Technologies
+
+- Flutter
+- Bloc state management
+- FireStore as database 
+- Flutter Lints
+
+
+
+Made with ❤️ by [Kevin Nkusi](https://github.com/nkusikevin)
